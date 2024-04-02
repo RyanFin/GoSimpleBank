@@ -32,4 +32,4 @@ test:
 	go test -v ./... -coverprofile=coverage.out 
 	go tool cover -html=coverage.out
 
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc
+.PHONY: postgres createdb dropdb migrateup migratedown sqlc test

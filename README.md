@@ -12,8 +12,13 @@
 - [Setting up sqlc.yaml old](https://docs.sqlc.dev/en/v1.8.0/reference/config.html)
 - [Setting up sqlc.yaml latest](https://docs.sqlc.dev/en/v1.26.0/reference/config.html)
 
-- `transfer.sql` and `entry.sql` implementations:
+- TechSchool Example implementations:
   https://github.com/techschool/simplebank/blob/master/db/query/transfer.sql
   https://github.com/techschool/simplebank/blob/master/db/query/entry.sql
+  https://github.com/techschool/simplebank/blob/master/db/query/account.sql
 
 -[lib/pq is required for postgres unit testing process](https://github.com/lib/pq)
+
+Offset value is the number of rows skipped. It is the starting point for the cursor and SQL output
+
+- https://reintech.io/blog/sql-offset-syntax-and-use
