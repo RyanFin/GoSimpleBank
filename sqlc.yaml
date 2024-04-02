@@ -1,0 +1,16 @@
+version: "1"
+packages:
+  - name: "db"
+    #   generated output
+    path: "./db/sqlc"
+    # list query to generate sql code
+    queries: "./db/query/"
+    # DBDiagram output is the schema
+    schema: "./db/migration/"
+    engine: "postgresql"
+    emit_prepared_queries: false
+    emit_interface: false
+    emit_exact_table_names: false
+    emit_empty_slices: false
+    emit_json_tags: true
+    # json_tags_case_style: "camel"
