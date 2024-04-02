@@ -15,3 +15,5 @@
 - `transfer.sql` and `entry.sql` implementations:
   https://github.com/techschool/simplebank/blob/master/db/query/transfer.sql
   https://github.com/techschool/simplebank/blob/master/db/query/entry.sql
+
+-[lib/pq is required for postgres unit testing process](https://github.com/lib/pq)
