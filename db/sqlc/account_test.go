@@ -1,6 +1,7 @@
 package db
 
 import (
+	"RyanFin/GoSimpleBank/util"
 	"context"
 	"testing"
 
@@ -9,9 +10,9 @@ import (
 func TestCreateAccount(t *testing.T){
 // create account params must be created
 args := CreateAccountParams{
-	Owner: "ryan",
-	Balance: 1500,
-	Currency: "GBP",
+	Owner: util.RandomOwner(),
+	Balance: util.RandomMoney(),
+	Currency: util.RandomCurrency(),
 }
 
 account, err := testQueries.CreateAccount(context.Background(), args)

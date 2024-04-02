@@ -1,6 +1,14 @@
 mode: set
 RyanFin/GoSimpleBank/main.go:5.12,7.2 1 0
-RyanFin/GoSimpleBank/db/sqlc/account.sql.go:27.96,38.2 4 0
+RyanFin/GoSimpleBank/util/random.go:11.12,13.2 1 0
+RyanFin/GoSimpleBank/util/random.go:16.37,18.2 1 0
+RyanFin/GoSimpleBank/util/random.go:21.32,25.24 3 0
+RyanFin/GoSimpleBank/util/random.go:25.24,28.3 2 0
+RyanFin/GoSimpleBank/util/random.go:30.2,30.20 1 0
+RyanFin/GoSimpleBank/util/random.go:34.26,36.2 1 0
+RyanFin/GoSimpleBank/util/random.go:39.25,41.2 1 0
+RyanFin/GoSimpleBank/util/random.go:44.29,48.2 3 0
+RyanFin/GoSimpleBank/db/sqlc/account.sql.go:27.96,38.2 4 1
 RyanFin/GoSimpleBank/db/sqlc/account.sql.go:44.70,47.2 2 0
 RyanFin/GoSimpleBank/db/sqlc/account.sql.go:54.78,65.2 4 0
 RyanFin/GoSimpleBank/db/sqlc/account.sql.go:79.96,81.16 2 0
@@ -43,3 +51,11 @@ RyanFin/GoSimpleBank/db/sqlc/transfer.sql.go:101.37,103.3 1 0
 RyanFin/GoSimpleBank/db/sqlc/transfer.sql.go:104.2,104.35 1 0
 RyanFin/GoSimpleBank/db/sqlc/transfer.sql.go:104.35,106.3 1 0
 RyanFin/GoSimpleBank/db/sqlc/transfer.sql.go:107.2,107.19 1 0
+RyanFin/GoSimpleBank/util/random.go:11.12,13.2 1 1
+RyanFin/GoSimpleBank/util/random.go:16.37,18.2 1 1
+RyanFin/GoSimpleBank/util/random.go:21.32,25.24 3 1
+RyanFin/GoSimpleBank/util/random.go:25.24,28.3 2 1
+RyanFin/GoSimpleBank/util/random.go:30.2,30.20 1 1
+RyanFin/GoSimpleBank/util/random.go:34.26,36.2 1 1
+RyanFin/GoSimpleBank/util/random.go:39.25,41.2 1 1
+RyanFin/GoSimpleBank/util/random.go:44.29,48.2 3 1
