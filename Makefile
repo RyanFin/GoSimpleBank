@@ -28,4 +28,8 @@ migratedown:
 sqlc:
 	sqlc generate
 
+test:
+	go test ./... -coverprofile=coverage.out 
+	go tool cover -html=coverage.out
+
 .PHONY: postgres createdb dropdb migrateup migratedown sqlc
