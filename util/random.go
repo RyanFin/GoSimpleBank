@@ -46,3 +46,9 @@ func RandomCurrency() string{
 	n := len(currencies)
 	return currencies[rand.Intn(n)]
 }
+
+// generate random account IDs for FromAccount and ToAccount
+func RandomAccountIDs() (int,int){
+	fromAccountID, toAccountID := RandomInt(1,81), RandomInt(1,81)
+	return int(fromAccountID), int(toAccountID)
+}
