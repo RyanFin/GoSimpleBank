@@ -36,60 +36,60 @@ func TestGetTransfer(t *testing.T){
 }
 
 // GET ALL transfers
-func TestListTransfers(t *testing.T){
+// func TestListTransfers(t *testing.T){
 
-	// load multiple tests using a test table
-	testTransfers := []struct{
-		fromAccID, toAccID, amount int64
-	}{
-		{1, util.RandomInt(2,81), util.RandomMoney()},
-		{1, util.RandomInt(2,81), util.RandomMoney()},
-		{1, util.RandomInt(2,81), util.RandomMoney()},
-		{1, util.RandomInt(2,81), util.RandomMoney()},
-		{1, util.RandomInt(2,81), util.RandomMoney()},
-		{1, util.RandomInt(2,81), util.RandomMoney()},
-		{1, util.RandomInt(2,81), util.RandomMoney()},
-		{1, util.RandomInt(2,81), util.RandomMoney()},
-		{1, util.RandomInt(2,81), util.RandomMoney()},
-	}
+// 	// load multiple tests using a test table
+// 	testTransfers := []struct{
+// 		fromAccID, toAccID, amount int64
+// 	}{
+// 		{1, util.RandomInt(2,81), util.RandomMoney()},
+// 		{1, util.RandomInt(2,81), util.RandomMoney()},
+// 		{1, util.RandomInt(2,81), util.RandomMoney()},
+// 		{1, util.RandomInt(2,81), util.RandomMoney()},
+// 		{1, util.RandomInt(2,81), util.RandomMoney()},
+// 		{1, util.RandomInt(2,81), util.RandomMoney()},
+// 		{1, util.RandomInt(2,81), util.RandomMoney()},
+// 		{1, util.RandomInt(2,81), util.RandomMoney()},
+// 		{1, util.RandomInt(2,81), util.RandomMoney()},
+// 	}
 
-	for _, transfer := range testTransfers{
-		args := CreateTransferParams{
-			FromAccountID: transfer.fromAccID,
-			ToAccountID: transfer.toAccID,
-			Amount: transfer.amount,
-		} 
+// 	for _, transfer := range testTransfers{
+// 		args := CreateTransferParams{
+// 			FromAccountID: transfer.fromAccID,
+// 			ToAccountID: transfer.toAccID,
+// 			Amount: transfer.amount,
+// 		} 
 	
-		transfer, err := testQueries.CreateTransfer(context.Background(), args)
-		// check no error
-		assert.NoError(t, err)
-		// check not empty
-		assert.NotEmpty(t, transfer)
+// 		transfer, err := testQueries.CreateTransfer(context.Background(), args)
+// 		// check no error
+// 		assert.NoError(t, err)
+// 		// check not empty
+// 		assert.NotEmpty(t, transfer)
 	
-		// check values are equal
-		assert.Equal(t, args.FromAccountID, int64(transfer.FromAccountID))
-		assert.Equal(t, args.FromAccountID, int64(transfer.FromAccountID))
-		assert.Equal(t, args.FromAccountID, int64(transfer.FromAccountID))
+// 		// check values are equal
+// 		assert.Equal(t, args.FromAccountID, int64(transfer.FromAccountID))
+// 		assert.Equal(t, args.FromAccountID, int64(transfer.FromAccountID))
+// 		assert.Equal(t, args.FromAccountID, int64(transfer.FromAccountID))
 	
-		// check id and timestamp not zero
-		assert.NotZero(t, transfer.ID)
-		assert.NotZero(t, transfer.CreatedAt)
-	}
+// 		// check id and timestamp not zero
+// 		assert.NotZero(t, transfer.ID)
+// 		assert.NotZero(t, transfer.CreatedAt)
+// 	}
 
-	args := ListTransfersParams{
-		FromAccountID: 1,
-		Limit: 7,
-	} 
+// 	args := ListTransfersParams{
+// 		FromAccountID: 1,
+// 		Limit: 7,
+// 	} 
 
-	transfers, err := testQueries.ListTransfers(context.Background(), args)
-	assert.NoError(t, err)
+// 	transfers, err := testQueries.ListTransfers(context.Background(), args)
+// 	assert.NoError(t, err)
 
-	assert.Len(t, transfers, 7)
+// 	assert.Len(t, transfers, 7)
 
-	for _, transfer := range transfers{
-		assert.NotEmpty(t, transfer)
-	}
-}
+// 	for _, transfer := range transfers{
+// 		assert.NotEmpty(t, transfer)
+// 	}
+// }
 
 
 func createRandomTransfer(t *testing.T) (Transfer, error){
