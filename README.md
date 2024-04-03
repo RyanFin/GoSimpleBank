@@ -22,3 +22,5 @@
 Offset value is the number of rows skipped. It is the starting point for the cursor and SQL output
 
 - https://reintech.io/blog/sql-offset-syntax-and-use
+
+[Test Driven Tests in Detail](https://dave.cheney.net/2019/05/07/prefer-table-driven-tests)
