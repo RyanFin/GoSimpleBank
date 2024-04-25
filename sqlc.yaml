@@ -1,7 +1,7 @@
 version: "1"
 packages:
   - name: "db"
-    #   generated output
+    #   generated output directory
     path: "./db/sqlc"
     # list query to generate sql code
     queries: "./db/query/"

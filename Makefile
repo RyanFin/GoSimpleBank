@@ -18,10 +18,11 @@ createdb:
 dropdb:
 	docker exec -it postgres-container dropdb simple_bank
 
-# apply migration to the postgres database
+# apply migration to the postgres database itself (000001_init_schema.up.sql migration file)
 migrateup:
 	migrate -path db/migration/ -database "postgresql://root:root@localhost:5432/simple_bank?sslmode=disable" -verbose up
 
+# apply migration to the postgres database itself (000001_init_schema.down.sql migration file)
 migratedown:
 	migrate -path db/migration/ -database "postgresql://root:root@localhost:5432/simple_bank?sslmode=disable" -verbose down
 
