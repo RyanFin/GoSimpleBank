@@ -34,3 +34,6 @@ test:
 	go tool cover -html=coverage.out
 
 .PHONY: postgres createdb dropdb migrateup migratedown sqlc test
+
+# multi-curl command, replace URL with amd.tar.gz present at this URL: https://github.com/golang-migrate/migrate/releases
+# https://github.com/golang-migrate/migrate/blob/master/cmd/migrate/README.md
