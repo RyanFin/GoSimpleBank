@@ -1,9 +1,12 @@
 # Simple Bank
 
-### DBDiagram.io
+## DBDiagram.io
 
 [DBDiagram.io](https://dbdiagram.io/d/simple-bank-660a849437b7e33fd733241e)
 [TablePlus for MacOS](https://tableplus.com/download)
+
+## Bash
+- `$ mkdir -p .github/workflows`. This allows you to create a directory hierarchy with a single command. `$ mkdir -p path/to/directory`. -p stands for 'parent'.
 
 ## SQLC
 
