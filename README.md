@@ -71,4 +71,11 @@ Here's how it works:
 In summary, `FOR NO KEY UPDATE` can be a useful tool for preventing deadlocks in PostgreSQL by reducing the likelihood of lock contention between transactions. However, it's essential to understand the trade-offs and implications for your specific application requirements.
 
 [Reference](https://chat.openai.com/c/5eb9ef3b-eba5-49d3-80e7-4677f2b5dc43)
+
+## GitHub Actions 
 [Github Actions Postgres](https://docs.github.com/en/actions/using-containerized-services/creating-postgresql-service-containers)
+
+## Web Framework Implementation
+- [Go Gin](https://github.com/gin-gonic/gin): The most popular Go Web Framework is Gin
+![Gin](popular-web-frameworks-and-routers.png)
+- [Gin Validator Tags in structs](https://pkg.go.dev/github.com/go-playground/validator#section-readme)

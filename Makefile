@@ -1,16 +1,21 @@
-.PHONY: run
 run:
 	go run main.go
+
+
+
 
 # https://github.com/golang-migrate/migrate
 # create a migration file for versions of the database.
 # db changes
-.PHONY: migrate
 migrate:
 	migrate create -ext sql -dir db/migration -seq init_schema
 
+
 postgres:
 	docker run --name postgres-container -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -d postgres:12-alpine 
+
+enter-shell:
+	docker exec -it postgres-container psql -U root
 
 createdb:
 	docker exec -it postgres-container createdb --username=root --owner=root simple_bank
@@ -33,7 +38,7 @@ test:
 	go test -v ./... -coverprofile=coverage.out 
 	go tool cover -html=coverage.out
 
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc test
+.PHONY: run migrate postgres createdb dropdb migrateup migratedown sqlc test 
 
 # multi-curl command, replace URL with amd.tar.gz present at this URL: https://github.com/golang-migrate/migrate/releases
 # https://github.com/golang-migrate/migrate/blob/master/cmd/migrate/README.md
