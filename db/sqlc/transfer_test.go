@@ -106,9 +106,7 @@ func createRandomTransfer(t *testing.T) (Transfer, error) {
 	// assert.NotEmpty(t, transfer)
 
 	// check values are equal
-	assert.Equal(t, args.FromAccountID, int64(transfer.FromAccountID))
-	assert.Equal(t, args.FromAccountID, int64(transfer.FromAccountID))
-	assert.Equal(t, args.FromAccountID, int64(transfer.FromAccountID))
+	assert.Equal(t, int64(args.FromAccountID), int64(transfer.FromAccountID))
 
 	// check id and timestamp not zero
 	assert.NotZero(t, transfer.ID)
