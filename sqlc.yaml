@@ -9,7 +9,7 @@ packages:
     schema: "./db/migration/"
     engine: "postgresql"
     emit_prepared_queries: false
-    emit_interface: false
+    emit_interface: true
     emit_exact_table_names: false
     # enable for empty slices when there is no data returned from an api call
     emit_empty_slices: true 
