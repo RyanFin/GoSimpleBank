@@ -5,6 +5,7 @@ import (
 	db "RyanFin/GoSimpleBank/db/sqlc"
 	"RyanFin/GoSimpleBank/util"
 	"bytes"
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -27,12 +28,40 @@ func TestGetAccountAPI(t *testing.T) {
 	}{
 		{"OK", account.ID, func(store *mockdb.MockStore) {
 			// build the stubs
-			store.EXPECT().GetAccount(gomock.Any(), gomock.Eq(account.ID)).
+			store.EXPECT().
+				GetAccount(gomock.Any(), gomock.Eq(account.ID)).
 				Times(1).
 				Return(account, nil)
 		}, func(t *testing.T, recorder *httptest.ResponseRecorder) {
 			require.Equal(t, http.StatusOK, recorder.Code)
 			requireBodyMatchAccount(t, recorder.Body, account)
+		}},
+		{"NotFound", account.ID, func(store *mockdb.MockStore) {
+			// build the stubs
+			store.EXPECT().
+				GetAccount(gomock.Any(), gomock.Eq(account.ID)).
+				Times(1).
+				Return(account, sql.ErrNoRows)
+		}, func(t *testing.T, recorder *httptest.ResponseRecorder) {
+			require.Equal(t, http.StatusNotFound, recorder.Code)
+		}},
+		{"InternalError", account.ID, func(store *mockdb.MockStore) {
+			// build the stubs
+			store.EXPECT().
+				GetAccount(gomock.Any(), gomock.Eq(account.ID)).
+				Times(1).
+				Return(account, sql.ErrConnDone)
+		}, func(t *testing.T, recorder *httptest.ResponseRecorder) {
+			require.Equal(t, http.StatusInternalServerError, recorder.Code)
+		}},
+		// minid should > 0
+		{"InvalidID", 0, func(store *mockdb.MockStore) {
+			// build the stubs
+			store.EXPECT().
+				GetAccount(gomock.Any(), gomock.Any()).
+				Times(0)
+		}, func(t *testing.T, recorder *httptest.ResponseRecorder) {
+			require.Equal(t, http.StatusBadRequest, recorder.Code)
 		}},
 	}
 
@@ -49,7 +78,7 @@ func TestGetAccountAPI(t *testing.T) {
 			server := NewServer(store)
 			recorder := httptest.NewRecorder()
 
-			url := fmt.Sprintf("/accounts/%d", account.ID)
+			url := fmt.Sprintf("/accounts/%d", tc.accountID)
 			request, err := http.NewRequest(http.MethodGet, url, nil)
 			require.NoError(t, err)
 
