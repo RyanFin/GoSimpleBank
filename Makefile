@@ -27,9 +27,16 @@ dropdb:
 migrateup:
 	migrate -path db/migration/ -database "postgresql://root:root@localhost:5432/simple_bank?sslmode=disable" -verbose up
 
+migrateup1:
+	migrate -path db/migration/ -database "postgresql://root:root@localhost:5432/simple_bank?sslmode=disable" -verbose up 1
+
 # apply migration to the postgres database itself (000001_init_schema.down.sql migration file)
 migratedown:
 	migrate -path db/migration/ -database "postgresql://root:root@localhost:5432/simple_bank?sslmode=disable" -verbose down
+
+# 'down 1' states that we only want to roll back one last migration that was applied before
+migratedown1:
+	migrate -path db/migration/ -database "postgresql://root:root@localhost:5432/simple_bank?sslmode=disable" -verbose down 1 
 
 sqlc:
 	sqlc generate
@@ -41,7 +48,7 @@ test:
 mock:
 	mockgen -package mockdb -destination db/mock/store.go RyanFin/GoSimpleBank/db/sqlc Store
 
-.PHONY: run migrate postgres createdb dropdb migrateup migratedown sqlc test mock
+.PHONY: run migrate postgres createdb dropdb migrateup migratedown sqlc test mock migrateup1 migratedown1
 
 # multi-curl command, replace URL with amd.tar.gz present at this URL: https://github.com/golang-migrate/migrate/releases
 # https://github.com/golang-migrate/migrate/blob/master/cmd/migrate/README.md
