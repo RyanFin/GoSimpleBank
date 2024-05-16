@@ -8,6 +8,9 @@
 ## Bash
 - `$ mkdir -p .github/workflows`. This allows you to create a directory hierarchy with a single command. `$ mkdir -p path/to/directory`. -p stands for 'parent'.
 
+## SQL
+- Generate new migrations file: `$ migrate create -ext sql -dir db/migration/ -seq add_users`
+
 ## SQLC
 
 - [SQLC Installation](https://docs.sqlc.dev/en/latest/overview/install.html)
