@@ -11,35 +11,37 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func createRandomAccount(t *testing.T) Account{
+func createRandomAccount(t *testing.T) Account {
+
+	user := createRandomUser(t)
 	// create account params must be created
-args := CreateAccountParams{
-	Owner: util.RandomOwner(),
-	Balance: util.RandomMoney(),
-	Currency: util.RandomCurrency(),
-}
+	args := CreateAccountParams{
+		Owner:    user.Username,
+		Balance:  util.RandomMoney(),
+		Currency: util.RandomCurrency(),
+	}
 
-account, err := testQueries.CreateAccount(context.Background(), args)
-assert.NoError(t, err)
-assert.NotEmpty(t, account)
+	account, err := testQueries.CreateAccount(context.Background(), args)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, account)
 
-assert.Equal(t, args.Owner, account.Owner)
-assert.Equal(t, args.Balance, account.Balance)
-assert.Equal(t, args.Currency, account.Currency)
+	assert.Equal(t, args.Owner, account.Owner)
+	assert.Equal(t, args.Balance, account.Balance)
+	assert.Equal(t, args.Currency, account.Currency)
 
-assert.NotZero(t, account.ID)
-assert.NotZero(t, account.CreatedAt)
+	assert.NotZero(t, account.ID)
+	assert.NotZero(t, account.CreatedAt)
 
-return account
+	return account
 }
 
 // test random account creation
-func TestCreateAccount(t *testing.T){
+func TestCreateAccount(t *testing.T) {
 	createRandomAccount(t)
 }
 
 // test retrieving an account from the postgres db (creates a new instance of the account obj)
-func TestGetAccount(t *testing.T){
+func TestGetAccount(t *testing.T) {
 	account1 := createRandomAccount(t)
 	account2, err := testQueries.GetAccount(context.Background(), account1.ID)
 	assert.NoError(t, err)
@@ -55,14 +57,13 @@ func TestGetAccount(t *testing.T){
 	require.WithinDuration(t, account1.CreatedAt, account2.CreatedAt, time.Second)
 }
 
-func TestUpdateAccount(t *testing.T){
+func TestUpdateAccount(t *testing.T) {
 	account1 := createRandomAccount(t)
 
 	args := UpdateAccountParams{
-		ID: account1.ID,
+		ID:      account1.ID,
 		Balance: util.RandomMoney(),
 	}
-
 
 	account2, err := testQueries.UpdateAccount(context.Background(), args)
 	assert.NoError(t, err)
@@ -77,11 +78,10 @@ func TestUpdateAccount(t *testing.T){
 	require.WithinDuration(t, account1.CreatedAt, account2.CreatedAt, time.Second)
 }
 
-func TestDeleteAccount(t *testing.T){
-	account1 := createRandomAccount(t) 
-	err := testQueries.DeleteAccount(context.Background(),account1.ID)
+func TestDeleteAccount(t *testing.T) {
+	account1 := createRandomAccount(t)
+	err := testQueries.DeleteAccount(context.Background(), account1.ID)
 	assert.NoError(t, err)
-
 
 	account2, err := testQueries.GetAccount(context.Background(), account1.ID)
 	assert.Error(t, err)
@@ -89,13 +89,13 @@ func TestDeleteAccount(t *testing.T){
 	assert.Empty(t, account2)
 }
 
-func TestListAccount(t *testing.T){
-	for i := 0; i < 10; i++{
+func TestListAccount(t *testing.T) {
+	for i := 0; i < 10; i++ {
 		createRandomAccount(t)
 	}
 
 	args := ListAccountsParams{
-		Limit: 5,
+		Limit:  5,
 		Offset: 5,
 	}
 
@@ -103,7 +103,7 @@ func TestListAccount(t *testing.T){
 	assert.NoError(t, err)
 	assert.Len(t, accounts, 5)
 
-	for _, account := range accounts{
+	for _, account := range accounts {
 		assert.NotEmpty(t, account)
 	}
 
