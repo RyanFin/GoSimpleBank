@@ -75,6 +75,13 @@ In summary, `FOR NO KEY UPDATE` can be a useful tool for preventing deadlocks in
 
 [Reference](https://chat.openai.com/c/5eb9ef3b-eba5-49d3-80e7-4677f2b5dc43)
 
+### Querying in Postgres
+- Example Query
+```
+-- All checked filters --
+SELECT * FROM users WHERE ("full_name" = 'Ryan Finlayson') ORDER BY "full_name" DESC LIMIT 300 OFFSET 0;
+```
+
 ## GitHub Actions 
 [Github Actions Postgres](https://docs.github.com/en/actions/using-containerized-services/creating-postgresql-service-containers)
 
