@@ -2,19 +2,34 @@ package api
 
 import (
 	db "RyanFin/GoSimpleBank/db/sqlc"
+	"RyanFin/GoSimpleBank/token"
+	"RyanFin/GoSimpleBank/util"
+	"fmt"
 
 	"github.com/gin-gonic/gin"
 )
 
 // Server serves HTTP requests for our banking service
 type Server struct {
-	store  db.Store // an interface instead of a struct
-	router *gin.Engine
+	config     util.Config
+	store      db.Store // an interface instead of a struct
+	tokenMaker token.Maker
+	router     *gin.Engine
 }
 
 // NewServer creates a new HTTP server and sets up routing
-func NewServer(store db.Store) *Server {
-	server := &Server{store: store}
+func NewServer(config util.Config, store db.Store) (*Server, error) {
+	tokenMaker, err := token.NewPasetoMaker(config.TokenSymmetricKey)
+	if err != nil {
+		return nil, fmt.Errorf("unable to instantiate token maker: %w", err)
+	}
+
+	server := &Server{
+		config:     config,
+		store:      store,
+		tokenMaker: tokenMaker,
+	}
+
 	router := gin.Default()
 
 	router.POST("/users", server.createUser)
@@ -27,7 +42,7 @@ func NewServer(store db.Store) *Server {
 	router.POST("/transfers", server.createTransfer)
 
 	server.router = router
-	return server
+	return server, nil
 }
 
 // run HTTP server on specific address to listen for requests
