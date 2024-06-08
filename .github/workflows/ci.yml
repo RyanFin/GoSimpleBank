@@ -27,10 +27,10 @@ jobs:
           go-version: '1.22.1'
       - name: Install golang-migrate
         run: |
-          curl -L -o https://github.com/golang-migrate/migrate/releases/download/v4.17.1/migrate.darwin-amd64.tar.gz | tar xvz
+          curl -L https://github.com/golang-migrate/migrate/releases/download/v4.17.1/migrate.darwin-amd64.tar.gz | tar xvz
           
-          sudo mv migrate.darwin-amd64 /usr/bin/
-          
+          sudo mv migrate /usr/bin/
+
           which migrate
       - name: Run migrations
         run: make migrateup
