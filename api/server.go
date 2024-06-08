@@ -30,9 +30,20 @@ func NewServer(config util.Config, store db.Store) (*Server, error) {
 		tokenMaker: tokenMaker,
 	}
 
-	router := gin.Default()
+	server.setupRouter()
 
+	return server, nil
+}
+
+func (server *Server) setupRouter() {
+	router := gin.Default()
+	// Set trusted proxies to localhost
+	err := router.SetTrustedProxies([]string{"127.0.0.1"})
+	if err != nil {
+		panic(err)
+	}
 	router.POST("/users", server.createUser)
+	router.POST("/users/login", server.loginUser)
 
 	// add routes to the router with handlers
 	router.POST("/accounts", server.createAccount)
@@ -42,7 +53,6 @@ func NewServer(config util.Config, store db.Store) (*Server, error) {
 	router.POST("/transfers", server.createTransfer)
 
 	server.router = router
-	return server, nil
 }
 
 // run HTTP server on specific address to listen for requests
