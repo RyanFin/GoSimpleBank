@@ -36,6 +36,7 @@ func NewServer(config util.Config, store db.Store) (*Server, error) {
 }
 
 func (server *Server) setupRouter() {
+	// gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
 	// Set trusted proxies to localhost
 	err := router.SetTrustedProxies([]string{"127.0.0.1"})
