@@ -10,19 +10,32 @@ WORKDIR /app
 # Second . represents the location of the copied data
 COPY . .
 RUN go build -o main main.go
+# install curl 
+RUN apk add curl
+# download go migrate library
+RUN curl -L https://github.com/golang-migrate/migrate/releases/download/v4.17.1/migrate.darwin-amd64.tar.gz | tar xvz
+        
 
 # Run stage
 FROM alpine:3.20
 WORKDIR /app
-# copy executable from the builder stage to the run stage
+# copy executable from the builder stage to the run stage env
 COPY --from=builder /app/main .
-# copy the viper config file to the docker environment directory
+# copy migrate binary to a new migrate directory in the run stage env 
+COPY --from=builder /app/migrate ./migrate
+# copy the viper config file to the docker run stage env
 COPY app.yml .
+COPY start.sh .
+COPY wait-for.sh .
+# copy all migration files from this project to the Docker file in a new migration directory
+COPY db/migration ./migration
+
 
 # inform docker that the container listens on the specified network port at runtime
 EXPOSE 8080
 # define the default command to run when the container starts
 CMD [ "/app/main" ]
+ENTRYPOINT [ "/app/start.sh" ]
 
 # REPOSITORY          TAG         IMAGE ID       CREATED              SIZE                                     
 # simplebank          latest      acab8a99ea88   About a minute ago   590MB
