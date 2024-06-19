@@ -89,3 +89,7 @@ SELECT * FROM users WHERE ("full_name" = 'Ryan Finlayson') ORDER BY "full_name" 
 - [Go Gin](https://github.com/gin-gonic/gin): The most popular Go Web Framework is Gin
 ![Gin](popular-web-frameworks-and-routers.png)
 - [Gin Validator Tags in structs](https://pkg.go.dev/github.com/go-playground/validator#section-readme)
+
+## Refresh Token Implmentation
+- **Access Tokens**: Access tokens are used to authenticate API endpoint routes and are provided once the user successfully logs into their account with a valid username and password. These access tokens are stateless in nature, and therefore they are not stored by the database. They should not be used for long sessions due to their stateless design. There is no way to revoke them if they get leaked. *Recommended lifetime: 10-15 mins*.
+- **Refresh Tokens**: Refresh tokens maintain a stateful session on the server.Client can use a refresh token with a long valid duration to request a new access token when the access token expires. The refresh token can be as simple as a random string or we can use PASETO. The refresh token is stored in a *sessions* table in the database. With an additional boolean field *is_blocked* to block the refresh token if it gets compromised or leaked. With the ability to revoke this refresh token its life time can be much longer than its access token counterpart. *Recommended lifetime: 1-7 days*.

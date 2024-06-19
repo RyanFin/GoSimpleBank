@@ -45,7 +45,7 @@ test:
 mock:
 	mockgen -package mockdb -destination db/mock/store.go RyanFin/GoSimpleBank/db/sqlc Store
 
-.PHONY: run migrate postgres createdb dropdb migrateup migratedown sqlc test mock migrateup1 migratedown1
+.PHONY: run migrate postgres-start createdb dropdb migrateup migratedown sqlc test mock migrateup1 migratedown1
 
 # multi-curl command, replace URL with amd.tar.gz present at this URL: https://github.com/golang-migrate/migrate/releases
 # https://github.com/golang-migrate/migrate/blob/master/cmd/migrate/README.md
