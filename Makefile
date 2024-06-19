@@ -7,8 +7,9 @@ run:
 migrate:
 	migrate create -ext sql -dir db/migration -seq init_schema
 
-postgres:
-	docker run --name postgres-container --network bank-network -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -d postgres:12-alpine 
+postgres-start:
+	docker network create bank-network
+	docker run --name postgres-container --network bank-network -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -d postgres:16-alpine
 
 enter-shell:
 	docker exec -it postgres-container psql -U root
