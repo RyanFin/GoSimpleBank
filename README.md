@@ -89,3 +89,73 @@ SELECT * FROM users WHERE ("full_name" = 'Ryan Finlayson') ORDER BY "full_name" 
 - [Go Gin](https://github.com/gin-gonic/gin): The most popular Go Web Framework is Gin
 ![Gin](popular-web-frameworks-and-routers.png)
 - [Gin Validator Tags in structs](https://pkg.go.dev/github.com/go-playground/validator#section-readme)
+
+## Refresh Token Implmentation
+- **Access Tokens**: Access tokens are used to authenticate API endpoint routes and are provided once the user successfully logs into their account with a valid username and password. These access tokens are stateless in nature, and therefore they are not stored by the database. They should not be used for long sessions due to their stateless design. There is no way to revoke them if they get leaked. *Recommended lifetime: 10-15 mins*.
+
+- **Refresh Tokens**: Refresh tokens maintain a stateful session on the server.Client can use a refresh token with a long valid duration to request a new access token when the access token expires. The refresh token can be as simple as a random string or we can use PASETO. The refresh token is stored in a *sessions* table in the database. With an additional boolean field *is_blocked* to block the refresh token if it gets compromised or leaked. With the ability to revoke this refresh token its life time can be much longer than its access token counterpart. *Recommended lifetime: 1-7 days*.
+
+## Shortcuts in VS Code
+
+## Order to create a new Postgres Table and Set it up for use
+
+Pre-requisite: 
+  1. Have golang migrate installed ($ brew install golang-migrate)
+  2. Have sqlc installed ($ brew install sqlc)
+  3. Have mockgen installed ($ go install github.com/golang/mock/mockgen@v1.6.0)
+    - Add export PATH=$PATH:$(go env GOPATH)/bin and export PATH=$PATH:$(go env GOBIN) to ~/.zshrc
+
+-- Begin --
+1. Generate an *up* and a *down* migration file for the new table
+  - $ migrate create -ext sql -dir db/migration -seq add_sessions
+
+2. Add SQL code to create a new table to the newly created *up* migration file (000003_add_sessions.up.sql)
+```
+CREATE TABLE "sessions" (
+  "id" uuid PRIMARY KEY,
+  "username" varchar NOT NULL,
+  "refresh_token" varchar NOT NULL,
+  "user_agent" varchar NOT NULL,
+  "client_ip" varchar UNIQUE NOT NULL,
+  "is_blocked" boolean NOT NULL DEFAULT false,
+  "expires_at" timestamptz NOT NULL,
+  "created_at" timestamptz NOT NULL DEFAULT (now())
+);
+
+ALTER TABLE "sessions" ADD FOREIGN KEY ("username") REFERENCES "users" ("username");
+``` [db/migration/000003_add_sessions.up.sql]
+- Add code for the migration *down* file
+```
+DROP TABLE IF EXISTS "sessions";
+``` [db/migration/000003_add_sessions.down.sql]
+- Execute the migration *up* file
+- $ migrate -path db/migration/ -database "postgresql://root:root@localhost:5432/simple_bank?sslmode=disable" -verbose up
+
+3. Create a sql script file that sqlc will use to generate the CRUD operations that you need. 
+  - Here is an example for Inserting a new session (CREATE) and for Getting session information by its id (READ)
+  - Ensure that the comments are named according to what you wish the name of the functions to be called
+```
+-- name: CreateSession :one
+INSERT INTO sessions (
+  id,
+  username,
+  refresh_token,
+  user_agent,
+  client_ip,
+  is_blocked,
+  expires_at
+) VALUES (
+  $1, $2, $3, $4, $5, $6, $7
+) RETURNING *;
+
+-- name: GetSession :one
+SELECT * FROM sessions
+WHERE id = $1 LIMIT 1;
+``` [db/query/sessions.sql]
+- Execute the sql script file so that sqlc will generate the golang code for these two methods
+- $ sql generate
+
+4. The db/sqlc/session.sql.go file will now have the go code required for the CRUD operations that you prototyped in the db/query/sessions.sql file.
+
+5. Update mock interfaces if need be:
+  - $ mockgen -package mockdb -destination db/mock/store.go RyanFin/GoSimpleBank/db/sqlc Store
