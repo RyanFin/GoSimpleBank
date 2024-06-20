@@ -159,3 +159,8 @@ WHERE id = $1 LIMIT 1;
 
 5. Update mock interfaces if need be:
   - $ mockgen -package mockdb -destination db/mock/store.go RyanFin/GoSimpleBank/db/sqlc Store
+
+6. Generate sql schema from db.dbml file
+Install dbml2gen: $ npm install -g @dbml/cli
+Get the doc/db.dbml file from dbdiagram.io
+Run: $ dbml2sql --postgres -o doc/schema.sql doc/db.dbml

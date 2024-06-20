@@ -1,3 +1,6 @@
+
+DB_URL=postgresql://root:root@localhost:5432/simple_bank?sslmode=disable
+
 run:
 	go run main.go
 
@@ -27,18 +30,18 @@ dropdb:
 
 # apply migration to the postgres database itself (000001_init_schema.up.sql migration file)
 migrateup:
-	migrate -path db/migration/ -database "postgresql://root:root@localhost:5432/simple_bank?sslmode=disable" -verbose up
+	migrate -path db/migration/ -database "$(DB_URL)" -verbose up
 
 migrateup1:
-	migrate -path db/migration/ -database "postgresql://root:root@localhost:5432/simple_bank?sslmode=disable" -verbose up 1
+	migrate -path db/migration/ -database "$(DB_URL)" -verbose up 1
 
 # apply migration to the postgres database itself (000001_init_schema.down.sql migration file)
 migratedown:
-	migrate -path db/migration/ -database "postgresql://root:root@localhost:5432/simple_bank?sslmode=disable" -verbose down
+	migrate -path db/migration/ -database "$(DB_URL)" -verbose down
 
 # 'down 1' states that we only want to roll back one last migration that was applied before
 migratedown1:
-	migrate -path db/migration/ -database "postgresql://root:root@localhost:5432/simple_bank?sslmode=disable" -verbose down 1 
+	migrate -path db/migration/ -database "$(DB_URL)" -verbose down 1 
 
 sqlc:
 	sqlc generate
@@ -49,6 +52,13 @@ test:
 
 mock:
 	mockgen -package mockdb -destination db/mock/store.go RyanFin/GoSimpleBank/db/sqlc Store
+
+# build API documentation using DBDocs at the location of the specified db.dbml file
+docs-build:
+	dbdocs build doc/db.dbml
+
+dbml-schema:
+	dbml2sql --postgres -o doc/schema.sql doc/db.dbml
 
 .PHONY: run migrate postgres-start createdb dropdb migrateup migratedown sqlc test mock migrateup1 migratedown1 migrate-create
 
