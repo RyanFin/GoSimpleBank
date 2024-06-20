@@ -1,0 +1,62 @@
+Project simple_bank{
+    database_type: 'PostgreSQL'
+    Note: '''
+        # Simple Bank Database
+    '''
+}
+
+Table users as U{
+  username varchar [pk]
+  hashed_password varchar [not null]
+  full_name varchar [not null]
+  email varchar [unique, not null]
+  password_changed_at timestamptz [not null, default: '0001-01-01 00:00:00Z'] // OR +00
+  created_at timestamptz [default: `now()`, not null]
+}
+
+Table accounts as A{
+  id bigserial [pk]
+  owner varchar [ ref: > U.username, not null]
+  balance bigint [not null]
+  currency varchar [not null]
+  created_at timestamptz [not null, default: `now()`]
+
+  // may want to search for accounts by owner name
+  Indexes {
+    owner
+    (owner, currency) [unique]
+  }
+
+}
+
+Table entries{
+  id bigserial [pk]
+  account_id bigint [ref: > A.id, not null] // one to many relationship
+  amount bigint [not null, note: 'it can be negative or positive']
+  created_at timestamptz [default: `now()`, not null]
+
+  // list all entries of a specific account
+  Indexes {
+    account_id
+  }
+}
+
+Table transfers {
+  id bigserial [pk]
+  from_account_id bigint [ref: > A.id, not null]
+  to_account_id bigint [ref: > A.id, not null]
+  amount bigint [not null, note: 'it must be positive']
+  created_at timestamptz [not null, default: `now()`]
+
+  Indexes {
+  // search for all transfers going out of an accounts
+  from_account_id
+
+  // search for all transfers going into an account 
+  to_account_id
+
+  // search for all transfers between two specific accounts 
+  // composite indexes
+  (from_account_id, to_account_id)
+  }
+}
