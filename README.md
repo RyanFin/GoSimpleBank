@@ -313,7 +313,8 @@ Run: $ dbml2sql --postgres -o doc/schema.sql doc/db.dbml
 
 Install VS Code extension: vscode-dbml
 
-## gRPC
+## gRPC and Protobuf
+Protobuf, which is short for “Protocol Buffers,” is an efficient, language-agnostic data serialization mechanism.
 
 - [GRPC installation](https://grpc.io/docs/languages/go/quickstart/)
 

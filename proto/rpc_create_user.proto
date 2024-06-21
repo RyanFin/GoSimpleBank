@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package pb;
 
-// path from the go.mod filez
+// path from the go.mod files
 option go_package = "RyanFin/GoSimpleBank/pb";
 
 import "user.proto";
