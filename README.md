@@ -359,4 +359,6 @@ Install VS Code extension: vscode-proto3
     ```
 
 **WHEN USING PROTOBUF ENSURE THAT THE PACKAGE NAME IS IDENTICAL IN EVERY FILE!**
+
+After generating the gRPC code, make sure that you run `$ go mod tidy` will get rid of the red lines with `service_simple_bank_grpc.pb.go`
     
