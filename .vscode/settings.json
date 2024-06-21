@@ -1,4 +1,9 @@
 {
   "editor.defaultFormatter": "golang.go",
-  "notebook.defaultFormatter": "golang.go"
+  "notebook.defaultFormatter": "golang.go",
+  "protoc": {
+        "options": [
+            "--proto_path=proto",
+        ]
+    }
 }

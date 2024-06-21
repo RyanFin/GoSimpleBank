@@ -60,7 +60,13 @@ docs-build:
 dbml-schema:
 	dbml2sql --postgres -o doc/schema.sql doc/db.dbml
 
-.PHONY: run migrate postgres-start createdb dropdb migrateup migratedown sqlc test mock migrateup1 migratedown1 migrate-create
+proto:
+	protoc --proto_path=proto --go_out=pb --go_opt=paths=source_relative \
+    --go-grpc_out=pb --go-grpc_opt=paths=source_relative \
+    proto/*.proto
+
+
+.PHONY: run migrate postgres-start createdb dropdb migrateup migratedown sqlc test mock migrateup1 migratedown1 migrate-create docs-build dbml-schema proto
 
 # multi-curl command, replace URL with amd.tar.gz present at this URL: https://github.com/golang-migrate/migrate/releases
 # https://github.com/golang-migrate/migrate/blob/master/cmd/migrate/README.md

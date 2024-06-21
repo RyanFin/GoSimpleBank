@@ -316,7 +316,7 @@ Install VS Code extension: vscode-dbml
 ## gRPC and Protobuf
 Protobuf, which is short for “Protocol Buffers,” is an efficient, language-agnostic data serialization mechanism.
 
-- [GRPC installation](https://grpc.io/docs/languages/go/quickstart/)
+- [GRPC installation and commands to generate Go gRPC code](https://grpc.io/docs/languages/go/quickstart/)
 
 - Install Go plugins:
 
@@ -330,4 +330,33 @@ Install VS Code extension: vscode-proto3
 
 - [Protobuf Guide with accepted data types](https://protobuf.dev/programming-guides/proto3/)
 
+- Ensure service_simple_bank.proto functions can access other proto files:
+    - [Backend Masterclass Episode 42. Timestamp - 8:19](https://www.udemy.com/course/backend-master-class-golang-postgresql-kubernetes/learn/lecture/31957718#overview)
+    - Go to VSCode settings and search for  `vscode-proto3 configuration` in the settings search bar -> open in settings.json. This will open up / create a new .vscode/settings.json file
+    - Go to Extensions and search for `vscode-proto3` and click it then scroll down to this piece of code for settings.json:
+    ```
+    {
+    "protoc": {
+        "path": "/path/to/protoc",
+        "compile_on_save": false,
+        "options": [
+            "--proto_path=protos/v3",
+            "--proto_path=protos/v2",
+            "--proto_path=${workspaceRoot}/proto",
+            "--proto_path=${env.GOPATH}/src",
+            "--java_out=gen/java"
+        ]
+    }
+}
+    ```
+    Modify it to this in settings.json:
+    ```
+    "protoc": {
+        "options": [
+            "--proto_path=proto",
+        ]
+    }
+    ```
 
+**WHEN USING PROTOBUF ENSURE THAT THE PACKAGE NAME IS IDENTICAL IN EVERY FILE!**
+    
