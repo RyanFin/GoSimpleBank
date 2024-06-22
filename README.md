@@ -375,3 +375,11 @@ Running `> show service` in the Evans shell initially failed to display my RPCs 
 You then need to set the SimpleBank service with `$ service SimpleBank`.
 
 TLDR: `$ package pb` -> `$ service SimpleBank`
+
+### gRPC Gateway Setup for gRPC and HTTP
+- [gRPC Gateway setup](https://github.com/grpc-ecosystem/grpc-gateway?tab=readme-ov-file)
+- [Necessary GoogleAPIs files](https://github.com/googleapis/googleapis/tree/master)
+    - annotations.proto
+    - field_behavior.proto
+    - http.proto
+    - httpbody.proto
