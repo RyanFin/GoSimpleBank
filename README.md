@@ -361,4 +361,13 @@ Install VS Code extension: vscode-proto3
 **WHEN USING PROTOBUF ENSURE THAT THE PACKAGE NAME IS IDENTICAL IN EVERY FILE!**
 
 After generating the gRPC code, make sure that you run `$ go mod tidy` will get rid of the red lines with `service_simple_bank_grpc.pb.go`
-    
+
+### Serve gRPC requests instead of HTTP
+[EVANS gRPC tool](https://github.com/ktr0731/evans)
+    - install: 
+        - `$ brew tap ktr0731/evans`
+        - `$ brew install evans`
+Connect to the running gRPC server with this command:
+    - `$ evans --host localhost --port 9090 -r repl`
+
+Running `> show service` in the Evans shell will display a table of the available RPCs that are hosted by the server.
