@@ -370,4 +370,8 @@ After generating the gRPC code, make sure that you run `$ go mod tidy` will get 
 Connect to the running gRPC server with this command:
     - `$ evans --host localhost --port 9090 -r repl`
 
-Running `> show service` in the Evans shell will display a table of the available RPCs that are hosted by the server.
+#### Fixing Issue displaying RPCs in the Evans shell
+Running `> show service` in the Evans shell initially failed to display my RPCs 'CreateUser' and 'LoginUser' in the shell window. The solution to this issue was to run `$ show package` to display the packages that have been loaded by Evans, you should see `pb` which contains the RPCs. You then set the pb package by running `$ package pb`. This selection fixes the issue, and you can now run `$ show service` to display all of my RPCs.
+You then need to set the SimpleBank service with `$ service SimpleBank`.
+
+TLDR: `$ package pb` -> `$ service SimpleBank`

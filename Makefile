@@ -66,8 +66,9 @@ proto:
 		--go-grpc_out=pb --go-grpc_opt=paths=source_relative \
 		proto/*.proto
 
+# load Evans CLI for use with gRPC
 evans:
-	evans --host localhost --port 9090 -r repl
+	evans  --host localhost --port 9090 -r repl 
 
 .PHONY: run migrate postgres-start createdb dropdb migrateup migratedown sqlc test mock migrateup1 migratedown1 migrate-create docs-build dbml-schema proto evans
 
