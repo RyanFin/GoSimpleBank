@@ -295,8 +295,6 @@ WHERE id = $1 LIMIT 1;
 
 4. The db/sqlc/session.sql.go file will now have the go code required for the CRUD operations that you prototyped in the db/query/sessions.sql file.
 
-  
-
 5. Update mock interfaces if need be:
 
 - $ mockgen -package mockdb -destination db/mock/store.go RyanFin/GoSimpleBank/db/sqlc Store
@@ -376,10 +374,11 @@ You then need to set the SimpleBank service with `$ service SimpleBank`.
 
 TLDR: `$ package pb` -> `$ service SimpleBank`
 
-### gRPC Gateway Setup for gRPC and HTTP
+### gRPC Gateway Setup for gRPC and HTTP Requests running concurrently
 - [gRPC Gateway setup](https://github.com/grpc-ecosystem/grpc-gateway?tab=readme-ov-file)
 - [Necessary GoogleAPIs files](https://github.com/googleapis/googleapis/tree/master)
     - annotations.proto
     - field_behavior.proto
     - http.proto
     - httpbody.proto
+I had an issue loading the session data after attempting to login, which would result in a login failed attempt. The solution to this is to refresh all the table data by running `make migrateup` and `make migratedown`. This resolved the issue.
